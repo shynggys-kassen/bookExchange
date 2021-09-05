@@ -1,19 +1,14 @@
 const express = require('express'); 
-const products = require('./data/products')
+// const products = require('./data/products')
 const app = express()
 const connectDB = require('./db')
+const BookRoutes = require('./routes/bookRoutes'); 
+const UserRoutes = require('./routes/userRoutes'); 
 
-const connection = connectDB()
+connectDB() 
+app.use(express.json()); 
 
-app.get('/api/products', (req, res) => {
-	console.log(req.rawHeaders); 
-	res.json(products)
-})
+app.use('/api/products', BookRoutes);
+app.use('/api/user', UserRoutes)
 
-app.get('/api/products/:id', (req, res) => {
-	const product = products.find((p) => p._id == req.params.id)
-	res.json(product)
-})
-
-
-app.listen(80, console.log('server is listening on port 80')); 
+app.listen(5000, console.log('server is listening on port 5000')); 
