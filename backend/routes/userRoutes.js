@@ -32,6 +32,7 @@ const validateToken = ErrorHandler(async (req, res, next) => {
 		}
 	} 
 
+
 	if (!token){
 		throw new Error('Token is not autorized'); 
 	}

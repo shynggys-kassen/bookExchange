@@ -12,7 +12,7 @@ const Product = ({product}) => {
 			<Card.Body>
 				<Link to = {`/product/${product._id}`}>
 					<Card.Title as='div'>
-						<strong>{product.name}</strong>
+						<strong>{product.title}</strong>
 					</Card.Title>
 				</Link>
 
@@ -21,7 +21,7 @@ const Product = ({product}) => {
 				</Card.Text>
 
 				<Card.Text as='h3'>
-					${product.price}
+					{product.price === 0 ? "Free" : `$${product.price}`}
 				</Card.Text>
 			</Card.Body>
 		</Card>

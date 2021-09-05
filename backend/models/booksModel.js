@@ -35,7 +35,7 @@ const BookSchema = mongoose.Schema({
 	}, 
 	description: {
 		type: String, 
-	required: true, 
+		required: true, 
 	}, 
 	rating:{
 		type: Number, 
@@ -53,6 +53,9 @@ const BookSchema = mongoose.Schema({
 		default: 0, 
 	},
 	reviews: [reviewSchema], 
+	format: {
+		type: String, 
+	}
 },{
 	timestamps: true, 
 })

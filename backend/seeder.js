@@ -8,20 +8,28 @@ const { OrderedBulkOperation } = require('mongodb');
 
 const connection = connectDB(); 
 
+function getRandom(){
+	let max = users.length - 1; 
+	return Math.floor(Math.random() * max);
+}
+
 const importData = async () => {
 	try{
 		await Book.deleteMany()
 		await User.deleteMany()
 
-		console.log(users);
-
 		const createUsers = await User.insertMany(users); 
-		const mainUser = createUsers[0]._id
-		const smapleBooks = books.map((book) => {
+
+
+		const samapleBooks = books.map((book) => {
+			let index = getRandom()
+			const mainUser = createUsers[index]._id
 			return {...book, user: mainUser}; 
 		})
-		const createBooks = Book.insertMany(smapleBooks);
 
+		console.log(samapleBooks[0]); 
+
+		const createBooks = Book.insertMany(samapleBooks);
 	}
 	catch(error){
 		console.log('error in seeder.js: ' + error); 
