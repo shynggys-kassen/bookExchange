@@ -4,15 +4,23 @@ import { Row, Col } from 'react-bootstrap';
 import Product from '../components/Product'; 
 import {listBooks} from '../actions/bookAction'; 
 
-const HomeScreen = () => {
+const HomeScreen = ({match}) => {
+	// search keyword
+	const keyword = match.params.keyword;
+	const pageNumber = match.params.pageNumebr || 1;
+
 	const dispatch = useDispatch(); 
 	const bookList = useSelector(state => state.bookList); 
 	const {loading, error, books} = bookList
 
+	console.log('bookList')
+	console.log(bookList)
+
+
 
 	useEffect(() => {
-		dispatch(listBooks())
-	}, [dispatch]); 
+		dispatch(listBooks(keyword))
+	}, [dispatch, keyword, pageNumber]); 
 
 	console.log(books); 
 	
