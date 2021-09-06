@@ -88,15 +88,17 @@ userRouter.get('/profile', validateToken, ErrorHandler(async (req, res) => {
 
 userRouter.post('/register', ErrorHandler(async (req, res) => {	
 	const {name, email, password} = req.body; 
+	console.log('name'); 
+	console.log(name, email, password); 
 	
 	try {
 		if(!email.endsWith('@connect.polyu.hk')){
-			res.status(400); 
-			throw new Error('the email is not correct'); 
+			res.status(401); 
+			throw new Error('Please enter PolyU email account'); 
 		}
 	} catch(error){
 		res.status(401);  
-		throw new Error('The email is not correct')
+		throw new Error('Please enter PolyU email account')
 	}
 
 	const userExist = await User.findOne({email}); 
@@ -124,6 +126,34 @@ userRouter.post('/register', ErrorHandler(async (req, res) => {
 		 	throw new Error('Invalid User Data'); 
 	} 
 }))
- 
+
+
+// PUT PROFILE 
+userRouter.put('/profile', validateToken,  ErrorHandler(async (req, res) => {
+	const user = await User.findById(req.user._id); 
+	
+	if(user){
+		user.name = req.body.name || user.name; 
+		user.email = req.body.email || user.email; 
+		
+		if(req.body.password){
+			user.password = req.body.password; 
+		}
+		
+		const updatedUser = await user.save(); 
+		res.json({
+			_id: updatedUser._id, 
+			name: updatedUser.name, 
+			email: updatedUser.email, 
+			token: generateToken(updatedUser._id), 
+		})
+	} else {
+		res.status(400); 
+		throw new Errpr('User not found');
+	}
+}))
+
+
+
 
 module.exports = userRouter;
