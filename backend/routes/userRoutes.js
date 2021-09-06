@@ -41,27 +41,35 @@ const validateToken = ErrorHandler(async (req, res, next) => {
 })
 
 // Login 
-userRouter.post('/login', async (req, res) => {
+userRouter.post('/login', ErrorHandler(async (req, res) => {
+	console.log('request'); 
 	const {email, password} = req.body; 
+	console.log(email, password); 
 	const user = await User.findOne({email}); 
 
-	if (user && (await user.matchPassword(password))){
-		res.json({
-			_id: user._id, 
-			name: user.name, 
-			email: user.email, 
-			token: generateToken(user._id), 
-		})
-	} else{ 
-		res.status(401)
-		throw new Error('Invalid email or passord');  
+	try{
+		if (user && (await user.matchPassword(password))){
+			res.json({
+				_id: user._id, 
+				name: user.name, 
+				email: user.email, 
+				token: generateToken(user._id), 
+			})
+		} else{ 
+			res.status(401)
+			throw new Error('Invalid email or password');  
+		}
+	} catch(error) {
+		res.status(401); 
+		throw new Error('Email or Password is incorrect'); 
 	}
-})
+}))
+
 
 // authentication is knowing that this user is this user
 // autherisation is saving this user
 // we can store it in the browser
-userRouter.get('/profile', validateToken, async (req, res) => {
+userRouter.get('/profile', validateToken, ErrorHandler(async (req, res) => {
 	const user = await User.findById(req.user._id)
 	if(user){
 		res.json({
@@ -75,7 +83,7 @@ userRouter.get('/profile', validateToken, async (req, res) => {
 		res.status(404); 
 		throw new Error('User not found'); 
 	}
-})
+}))
 
 
 userRouter.post('/register', ErrorHandler(async (req, res) => {	
