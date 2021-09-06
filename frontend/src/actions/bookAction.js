@@ -5,6 +5,7 @@ export const listBooks = (keyword = '', pageNumber = '') => async(dispatch) => {
 
 	try{ 
 		dispatch({ type: 'BOOK_LIST_REQUEST' }); 
+		console.log(`pageNumeber ${pageNumber}`); 
 		const {data} = await axios.get(`/api/books?keyword=${keyword}&pageNumber=${pageNumber}`);
 		
 		dispatch({

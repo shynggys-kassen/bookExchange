@@ -3,11 +3,11 @@ const router = express.Router()
 const Product = require('../models/booksModel'); 
 const asyncHandler = require('express-async-handler'); 
 
-
-
 router.get('/', asyncHandler( async (req, res) => {
-	const pageSize = 2
+	const pageSize = 10
 	const page = Number(req.query.pageNumber) || 1; 
+
+	console.log(`page: ${page}`); 
 
 	const keyword = req.query.keyword ? {
 		// regex
@@ -17,14 +17,15 @@ router.get('/', asyncHandler( async (req, res) => {
 		}
 	} : {}
 
-	
-	
+
 	try{
 		// paginated products
 		// limit is used to limit array length
 		// skip is the skip the beginning elements in the array (page - 1) as page starts with 1
 		const count = await Product.countDocuments({...keyword}); 
 		const books = await Product.find({...keyword}).limit(pageSize).skip(pageSize * (page - 1));   
+
+		console.log(`books ${books}`); 
 
 		res.json({books, page, pages: Math.ceil(count / pageSize)})
 	} catch (error){

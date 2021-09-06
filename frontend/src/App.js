@@ -20,9 +20,9 @@ function App() {
             <Route path='/register' component={RegisterScreen} />
             <Route path='/profile' component={ProfileScreen} />
             <Route path='/product/:id' component={ProductScreen} />
-            <Route path='/search/:keyword' component={HomeScreen}/> 
-            <Route path='/search/page/:pageNumber' component={HomeScreen} exact /> {/* pagination during search*/}
-            <Route path='/page/:pageNumber' component={HomeScreen} exact /> {/* pagination */}
+            <Route path='/search/:keyword' component={HomeScreen} exact/> 
+            <Route path='/search/:keyword/page/:pageNumber' component={HomeScreen} exact /> {/* pagination during search*/}
+            <Route path='/page/:pageNumber' component={HomeScreen} /> {/* pagination */}
             <Route path='/' component={HomeScreen} exact />
           </Container>
         </Container>
