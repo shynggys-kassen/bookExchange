@@ -31,7 +31,7 @@ export const bookReviewCreateReducer = (state = {}, action) => {
 
 
 
-export const bookCreateCreateReducer = (state = {}, action) => {
+export const bookCreateReducer = (state = {}, action) => {
 	switch (action.type) {
 		case 'BOOK_CREATE_REQUEST':
 			return {loading: true}
@@ -46,3 +46,21 @@ export const bookCreateCreateReducer = (state = {}, action) => {
 	}
 }
 
+
+
+
+
+export const bookDeleteReducer = (state = {}, action) => {
+	switch (action.type) {
+		case 'BOOK_DELETE_REQUEST':
+			return {loading: true}
+		case 'BOOK_DELETE_SUCCESS': 
+			return {loading: false, success: true, product: action.payload}
+		case 'BOOK_DELETE_FAIL': 
+			return {loading: false, error: action.payload}
+		case 'BOOK_DELETE_RESET': 
+			return {}
+		default: 
+			return state
+	}
+}

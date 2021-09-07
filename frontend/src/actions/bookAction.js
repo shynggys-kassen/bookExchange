@@ -5,7 +5,6 @@ export const listBooks = (keyword = '', pageNumber = '') => async(dispatch) => {
 
 	try{ 
 		dispatch({ type: 'BOOK_LIST_REQUEST' }); 
-		console.log(`pageNumeber ${pageNumber}`); 
 		const {data} = await axios.get(`/api/books?keyword=${keyword}&pageNumber=${pageNumber}`);
 		
 		dispatch({
@@ -84,3 +83,40 @@ export const createBook = ()  => async(dispatch, getState) => {
 		})
 	}
 }
+
+
+
+
+
+
+// DELETE BOOK
+export const deleteBook = (id)  => async(dispatch, getState) => {
+	try{ 
+		dispatch({ type: 'BOOK_DELETE_REQUEST' }); 
+
+		const {userLogin: {userInfo}} = getState()
+		
+		const config = {
+			headers: {
+				'Content-Type': 'application/json', 
+				Authorization: `Bearer ${userInfo.token}`
+			}
+		}
+
+		// delete
+		const {data} = await axios.delete(`/api/books/${id}`, config);
+
+		
+		dispatch({
+			type: 'BOOK_DELETE_SUCCESS', 
+			payload: data, 
+		})
+
+	} catch (error){
+		dispatch({
+			type: 'BOOK_DELETE_FAIL',
+			payload: (error.response && error.response.data.message) ? error.response.data.message : error.message,  
+		})
+	}
+}
+

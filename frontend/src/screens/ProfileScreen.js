@@ -4,6 +4,9 @@ import {Form, Button, Row, Col} from 'react-bootstrap'
 import {useDispatch, useSelector} from 'react-redux'
 import Message from '../components/Message'; 
 import {getUserDetails, updateUserProfile} from '../actions/userActions'
+import {Route} from 'react-router-dom'; 
+
+import ProductListScreen from './ProductListScreen'; 
 
 const ProfileScreen = ({history}) => {
 	const [name, setName] = useState(''); 
@@ -116,7 +119,7 @@ const ProfileScreen = ({history}) => {
 
 
 			<Col md={9}>
-				<h2>My Uploads</h2>
+				<Route render={({history, match}) => <ProductListScreen history={history} match={match}> </ProductListScreen>}/>
 			</Col>
 		</Row>
 	)
