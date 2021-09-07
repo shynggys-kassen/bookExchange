@@ -85,7 +85,7 @@ const ProductEditScreen = ({ match, history }) => {
         },
       }
 
-      const { data } = await axios.post('/api/upload', formData, config)
+      const { data } = await axios.post('/api/upload/image', formData, config)
 
       setImage(data)
       setImageUploading(false)
@@ -108,7 +108,9 @@ const ProductEditScreen = ({ match, history }) => {
         }, 
       }
 
-      const {data} = await axios.post()
+      const {data} = await axios.post('/api/upload/file', formData, config)
+      setFile(data)
+      setFileUploading(false)
     } catch (error){
       console.log(error); 
       setFileUploading(false); 
@@ -189,7 +191,7 @@ const ProductEditScreen = ({ match, history }) => {
 
 
             <Form.Group controlId='file'>
-              <Form.Label>Image</Form.Label>
+              <Form.Label>File</Form.Label>
               <Form.Control
                 type='text'
                 placeholder='Enter file url'
@@ -197,7 +199,7 @@ const ProductEditScreen = ({ match, history }) => {
                 onChange={(e) => setFile(e.target.value)}
               ></Form.Control>
               <Form.File
-                id='image-file'
+                id='file'
                 label='Choose File'
                 custom
                 onChange={uploadFileHandler}
