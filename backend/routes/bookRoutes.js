@@ -36,7 +36,7 @@ const validateToken = ErrorHandler(async (req, res, next) => {
 
 // list all the books
 router.get('/', asyncHandler( async (req, res) => {
-	const pageSize = 10
+	const pageSize = 12
 	const page = Number(req.query.pageNumber) || 1; 
 
 	console.log(`page: ${page}`); 

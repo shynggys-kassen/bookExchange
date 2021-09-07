@@ -8,7 +8,6 @@ import {listBooks, deleteBook, createBook} from '../actions/bookAction';
 
 const ProductListScreen = ({ history, match }) => {
   const pageNumber = match.params.pageNumber || 1
-
   const dispatch = useDispatch()
 
   const bookList = useSelector((state) => state.bookList)
