@@ -120,3 +120,69 @@ export const deleteBook = (id)  => async(dispatch, getState) => {
 	}
 }
 
+
+
+// list book details
+export const listProductDetails = (id)  => async(dispatch, getState) => {
+	try{ 
+		dispatch({ type: 'BOOK_DETAIL_REQUEST' }); 
+
+		const {userLogin: {userInfo}} = getState()
+		
+		const config = {
+			headers: {
+				'Content-Type': 'application/json', 
+				Authorization: `Bearer ${userInfo.token}`
+			}
+		}
+
+		// delete
+		const {data} = await axios.get(`/api/books/${id}`, config);
+		console.log('data from Actions'); 
+		console.log(data); 
+		
+		dispatch({
+			type: 'BOOK_DETAIL_SUCCESS', 
+			payload: data, 
+		})
+
+	} catch (error){
+		dispatch({
+			type: 'BOOK_DETAIL_FAIL',
+			payload: (error.response && error.response.data.message) ? error.response.data.message : error.message,  
+		})
+	}
+}
+
+
+// UDPATE PRODUCT
+// list book details
+export const updateProduct = (product)  => async(dispatch, getState) => {
+	try{ 
+	 	dispatch({ type: 'BOOK_UPDATE_REQUEST' });
+
+		const {userLogin: {userInfo}} = getState()
+		
+		const config = {
+			headers: {
+				'Content-Type': 'application/json', 
+				Authorization: `Bearer ${userInfo.token}`
+			}
+		}
+
+
+		// delete
+		const {data} = await axios.put(`/api/books/${product._id}`, product, config);
+		
+		dispatch({
+			type: 'BOOK_UPDATE_SUCCESS', 
+			payload: data, 
+		})
+
+	} catch (error){
+		dispatch({
+			type: 'BOOK_UPDATE_FAIL',
+			payload: (error.response && error.response.data.message) ? error.response.data.message : error.message,  
+		})
+	}
+}

@@ -63,13 +63,12 @@ router.get('/', asyncHandler( async (req, res) => {
 	} catch (error){
 		throw new Error(error); 
 	}
-
-
 }))
 
 
 // select book by book id
 router.get('/:id', asyncHandler(async (req, res) => {
+	console.log('requested'); 
 	const product = await Product.findById(req.params.id);  
 	if (product){
 		res.json(product); 
