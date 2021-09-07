@@ -31,4 +31,5 @@ app.get('*', (req, res) => {
 app.use(notFound)
 app.use(errorHandler)
 
-app.listen(5000, console.log('server is listening on port 5000')); 
+const PORT = 80
+app.listen(PORT, console.log(`server is listening on port ${PORT}`)); 
